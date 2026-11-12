@@ -10,6 +10,8 @@ Research Studio ist eine einzelne HTML-Datei (`Research Studio.html`). Öffne si
 - **Sprachliche Klarheit.** Ausgewählte Regeln aus ASD-STE100, einstellbar von 0 bis 100 (Standard 60).
 - **Vorbildartikel.** Zusätzlich zu PubMed/PMID lassen sich ein bis zwei eigene Referenzartikel (PDF oder DOCX) hochladen; ausgewertet werden Aufbau, Argumentationsgang, Wortverteilung sowie Tabellen und Abbildungen.
 - **Tabellen und Abbildungen.** Flussdiagramm, Jahresverteilung, Evidenzniveaus, Themen und Suchstrategie entstehen aus den Projektdaten; konzeptionelle Tabellen schlägt das Sprachmodell aus Evidenztabelle und Synthese vor. Export nach Word, LaTeX und Markdown.
+- **DFG-Antrag (Sachbeihilfe).** Beschreibung des Vorhabens in der vorgegebenen Gliederung des DFG-Vordrucks 54.012 (Stand 09/26); das Literaturverzeichnis steht als Kapitel 3 an seinem Platz.
+- **Referenzartikel ab der ersten Etappe.** Der Upload steht bereits im Konzept bereit, auch für Methodenkapitel.
 - **Weitere Formate.** Policy Brief, Critical Essay / Perspective, Commentary / Viewpoint, Methodological Note, Research Protocol, wissenschaftliches Buchkapitel.
 - **Schreibstilprofil.** Optional aus eigenen Manuskripten abgeleitet; ergänzt die Stilregeln.
 - **Modelle.** Neue Modelle lassen sich unter Einstellungen › Erweitert eintragen, ohne den Code zu ändern.

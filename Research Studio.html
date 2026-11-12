@@ -423,10 +423,62 @@ const TYPES = {
     absTask: "Write an unstructured chapter abstract in one paragraph that states the topic, the scope and what the reader will learn.",
     write: "Write for readers who want a reliable entry into the topic. Define the core concepts when they first appear. Present the state of knowledge in a didactic order, from foundations to open questions, and weigh the evidence instead of listing it. Use sub-headings generously. Where the content allows, include a clinical or practical perspective. Close with a short summary of the main points and with open questions.",
     outline: "- Introduction: topic, relevance and scope of the chapter (10%)\n- Concepts and definitions (15%)\n- State of knowledge in three to five thematic sections (50%)\n- Implications for practice (12%)\n- Open questions and outlook (8%)\n- Summary (5%)" },
+  dfg: { de: "DFG-Antrag (Sachbeihilfe)", en: "DFG research grant proposal (project description for a Sachbeihilfe, structured after DFG form 54.012, Beschreibung des Vorhabens, Projektanträge)", guide: "DFG form 54.012 (project description) and DFG form 54.01 (proposal preparation instructions)", kind: "article", words: 6500, group: "format", range: [30, 800], maxRecords: 500, absWords: 250, plan: "required", fixed: "dfg", modelQuery: "",
+    absLabel: { de: "Zusammenfassung (für Teil A in elan)", en: "Summary (for part A in elan)" }, absTask: "Write a generally understandable summary of the planned project in one paragraph: starting point, objectives, approach and expected contribution. Use the future tense for everything that is planned.",
+    write: "A grant proposal must convince reviewers of three things: the question matters, the gap in knowledge is real, and the work programme answers the question within the funding period. Chapter 1 presents the state of research concisely and in direct relation to the project, as the basis of the applicant's own work; it names the applicant's preliminary work only as the author's details give it. The objectives are stated stringently and can be checked at the end of the project. The work programme describes the planned steps, methods, their order and their timing in enough detail to judge feasibility; group it into work packages where the author's details allow. Use the future tense for everything that is planned. Report only plans, preliminary work, staff, partners, durations and funds that the author's details contain. Never invent pilot data, sample sizes, cooperation partners, costs or dates; mark each missing essential with [Angabe fehlt]. Cite only published or publicly accessible work from SOURCES." },
   ch_intro: { de: "Kapitel: Einleitung", en: "Introduction chapter (funnel from problem relevance through state of research to research gap and aims)", guide: "APA JARS", kind: "chapter", pages: 4, group: "chapter" },
   ch_methods: { de: "Kapitel: Methodik", en: "Methods chapter", guide: "APA JARS / study-specific reporting guideline", kind: "chapter", pages: 5, group: "chapter" },
   ch_discussion: { de: "Kapitel: Diskussion", en: "Discussion chapter (interpreting the author's own findings against the literature)", guide: "APA JARS", kind: "chapter", pages: 6, group: "chapter" },
 };
+/* Prescribed outlines. n: number as printed, share: part of the word target (chapters 1 and 2, which count towards the page limit),
+   words: fixed target of a section outside that limit, head: heading only, refs: the reference list is printed here,
+   own: written only from the applicant's details, fill: left to the applicant (pre-filled with a marker). */
+const FIXED_OUTLINES = {
+  dfg: [
+    { n: "1", de: "Ausgangslage: Stand der Forschung und eigene Vorarbeiten", en: "Starting point: state of the art and preliminary work", level: 1, share: 0.35, purpose: "Stand der Forschung knapp und präzise in unmittelbarem Bezug zum Vorhaben; eigene Vorarbeiten nur wie angegeben." },
+    { n: "2", de: "Ziele und Arbeitsprogramm", en: "Objectives and work programme", level: 1, head: true },
+    { n: "2.1", de: "Voraussichtliche Gesamtdauer des Projekts", en: "Anticipated total duration of the project", level: 2, share: 0.01, own: true, purpose: "Gesamtdauer und beantragter Förderzeitraum, nur nach den Angaben der Antragstellenden." },
+    { n: "2.2", de: "Ziele", en: "Objectives", level: 2, share: 0.13, purpose: "Wissenschaftliche Zielsetzung, Fragestellungen und Hypothesen stringent darstellen." },
+    { n: "2.3", de: "Arbeitsprogramm inkl. vorgesehener Untersuchungsmethoden", en: "Work programme incl. proposed research methods", level: 2, share: 0.40, purpose: "Geplantes Vorgehen im Antragszeitraum, Methoden, Arbeitspakete und Zeitplan so genau, dass die Durchführbarkeit beurteilt werden kann." },
+    { n: "2.4", de: "Umgang mit Forschungsdaten", en: "Handling of research data", level: 2, share: 0.06, own: true, purpose: "Welche Daten entstehen, wie sie dokumentiert, gesichert, archiviert und nachnutzbar gemacht werden." },
+    { n: "2.5", de: "Relevanz von Geschlecht und/oder Diversität im Forschungsvorhaben", en: "Relevance of sex, gender and/or diversity in the research project", level: 2, share: 0.04, purpose: "Bedeutung von Geschlecht und Diversität für Fragestellung, Methoden und Stichprobe." },
+    { n: "3", de: "Projekt- und themenbezogenes Literaturverzeichnis", en: "Project- and subject-related list of publications", level: 1, head: true, refs: true },
+    { n: "4", de: "Begleitinformationen zum Forschungskontext", en: "Supplementary information on the research context", level: 1, head: true, aux: true },
+    { n: "4.1", de: "Angaben zu ethischen und/oder rechtlichen Aspekten des Vorhabens", en: "Ethical and/or legal aspects of the project", level: 2, head: true, aux: true },
+    { n: "4.1.1", de: "Allgemeine ethische Aspekte und Verpflichtungen", en: "General ethical aspects and obligations", level: 2, words: 250, own: true, aux: true, purpose: "Ethische Aspekte, Einwilligung, Datenschutz, Ethikvotum; besondere Schutzbedürftigkeit der Teilnehmenden." },
+    { n: "4.1.2", de: "Erläuterungen zu den vorgesehenen Untersuchungen bei Versuchen an Tieren", en: "Descriptions of proposed investigations involving experiments on animals", level: 2, fill: true, aux: true },
+    { n: "4.1.3", de: "Erläuterungen zu Forschungsvorhaben an genetischen Ressourcen (oder darauf bezogenem traditionellem Wissen) aus dem Ausland", en: "Descriptions of projects involving genetic resources (or associated traditional knowledge) from a foreign country", level: 2, fill: true, aux: true },
+    { n: "4.1.4", de: "Erläuterungen zu möglichen sicherheitsrelevanten Aspekten (Dual-Use Research of Concern, Außenwirtschaftsrecht; Risiken in internationalen Kooperationen)", en: "Explanations regarding any possible safety-related aspects (Dual Use Research of Concern, foreign trade law; risks in international cooperation)", level: 2, fill: true, aux: true },
+    { n: "4.1.5", de: "Reflexion zu ökologischen Nachhaltigkeitsaspekten in der Planung und Durchführung des Vorhabens", en: "Considerations on aspects of ecological sustainability in the planning and implementation of the project", level: 2, words: 150, own: true, aux: true, purpose: "Ressourcenverbrauch des Vorhabens (Reisen, Rechenleistung, Material) und vorgesehene Maßnahmen." },
+    { n: "4.2", de: "Angaben zur Dienststellung", en: "Employment status information", level: 2, fill: true, aux: true },
+    { n: "4.3", de: "Angaben zur Erstantragstellung", en: "First-time proposal data", level: 2, fill: true, aux: true },
+    { n: "4.4", de: "Zusammensetzung der Projektarbeitsgruppe", en: "Composition of the project group", level: 2, fill: true, aux: true },
+    { n: "4.5", de: "Zusammenarbeit mit Wissenschaftler*innen in Deutschland in diesem Projekt", en: "Researchers in Germany with whom you have agreed to cooperate on this project", level: 2, fill: true, aux: true },
+    { n: "4.6", de: "Zusammenarbeit mit Wissenschaftler*innen im Ausland in diesem Projekt", en: "Researchers abroad with whom you have agreed to cooperate on this project", level: 2, fill: true, aux: true },
+    { n: "4.7", de: "Wissenschaftler*innen, mit denen in den letzten drei Jahren wissenschaftlich zusammengearbeitet wurde", en: "Researchers with whom you have collaborated scientifically within the past three years", level: 2, fill: true, aux: true },
+    { n: "4.8", de: "Projektrelevante Zusammenarbeit mit erwerbswirtschaftlichen Unternehmen", en: "Project-relevant cooperation with commercial enterprises", level: 2, fill: true, aux: true },
+    { n: "4.9", de: "Projektrelevante Beteiligungen an erwerbswirtschaftlichen Unternehmen", en: "Project-relevant participation in commercial enterprises", level: 2, fill: true, aux: true },
+    { n: "4.10", de: "Apparative Ausstattung", en: "Scientific equipment", level: 2, fill: true, aux: true },
+    { n: "4.11", de: "Weitere Antragstellungen", en: "Other submissions", level: 2, fill: true, aux: true },
+    { n: "4.12", de: "Weitere Angaben", en: "Other information", level: 2, fill: true, aux: true },
+    { n: "5", de: "Beantragte Module/Mittel", en: "Requested modules/funds", level: 1, head: true, aux: true },
+    { n: "5.1", de: "Basismodul", en: "Basic Module", level: 2, head: true, aux: true },
+    { n: "5.1.1", de: "Personalmittel", en: "Funding for Staff", level: 2, words: 300, own: true, aux: true, purpose: "Jede beantragte Stelle mit Umfang, Dauer, Aufgaben im Projekt und Begründung." },
+    { n: "5.1.2", de: "Sachmittel", en: "Direct Project Costs", level: 2, words: 300, own: true, aux: true, purpose: "Geräte bis 10.000 Euro, Software und Verbrauchsmaterial; Reisemittel; Mittel für wissenschaftliche Gäste; Mittel für Versuchstiere; sonstige Mittel; Publikationsmittel. Jede Position als Zwischenüberschrift mit Begründung." },
+    { n: "5.1.3", de: "Investitionsmittel (Geräte über 10.000 Euro, Großgeräte über 50.000 Euro)", en: "Instrumentation (equipment exceeding €10,000, major instrumentation exceeding €50,000)", level: 2, fill: true, aux: true },
+    { n: "5.2", de: "Modul Eigene Stelle", en: "Module Temporary Positions for Principal Investigators", level: 2, fill: true, aux: true },
+    { n: "5.3", de: "Modul Vertretung", en: "Module Replacements", level: 2, fill: true, aux: true },
+    { n: "5.4", de: "Modul Rotationsstellen", en: "Module Temporary Substitutes for Clinicians", level: 2, fill: true, aux: true },
+    { n: "5.5", de: "Modul Mercator Fellow", en: "Module Mercator Fellows", level: 2, fill: true, aux: true },
+    { n: "5.6", de: "Modul Projektspezifische Workshops", en: "Module Project-Specific Workshops", level: 2, fill: true, aux: true },
+    { n: "5.7", de: "Modul Wissenschaftskommunikation", en: "Module Public Relations", level: 2, fill: true, aux: true },
+    { n: "5.8", de: "Modul Pauschale für Chancengleichheitsmaßnahmen", en: "Module Standard Allowance for Equity and Diversity", level: 2, fill: true, aux: true },
+  ],
+};
+const fixedOutlineOf = (p) => FIXED_OUTLINES[typeInfo(p.type).fixed] || null;
+const secHeadOnly = (sec) => !!(sec && sec.headingOnly);
+const secIsEmpty = (sec) => !secHeadOnly(sec) && !(S.sections[sec.id] && S.sections[sec.id].text);
+const APP_VERSION = "2.1";
 const TYPE_GROUPS = [["review", "Übersichtsarbeiten und Artikel"], ["format", "Weitere Publikationsformate"], ["chapter", "Kapitel einer Qualifikationsarbeit"]];
 const typeInfo = (type) => TYPES[type] || TYPES.narrative;
 const TYPE_HINTS = {
@@ -435,6 +487,7 @@ const TYPE_HINTS = {
   policy_brief: "Kurze, evidenzgestützte Entscheidungsvorlage mit Optionen und Empfehlungen. Etwa 2.000 Wörter.", essay: "Vertritt eine These, setzt sich mit der stärksten Gegenposition auseinander und leitet Folgerungen ab. Etwa 3.500 Wörter.",
   commentary: "Kurzer, pointierter Beitrag zu einer aktuellen Entwicklung, Debatte oder Publikation. Etwa 1.500 Wörter.", methnote: "Beschreibt und begründet eine Methode oder ein Verfahren so, dass andere es anwenden können. Etwa 3.000 Wörter.",
   protocol: "Begründung, Ziele, Design und Auswertungsplan einer noch nicht durchgeführten Studie (SPIRIT, PRISMA-P oder JBI). Etwa 4.000 Wörter.", book_chapter: "Didaktisch aufgebauter Überblick für einen Sammelband oder ein Handbuch. Etwa 7.000 Wörter.",
+  dfg: "Beschreibung des Vorhabens für eine Sachbeihilfe in der vorgegebenen Gliederung der DFG (Vordruck 54.012, Stand 09/26). Kapitel 1 bis 3 höchstens 17 Seiten.",
   ch_intro: "Vom Problem über den Forschungsstand zur Forschungslücke und Zielsetzung.", ch_methods: "Methodenkapitel aus deinen Studienangaben, geprüft gegen den passenden Berichtsstandard.", ch_discussion: "Deutet deine eigenen Befunde vor dem Hintergrund der Literatur.",
 };
 const METHOD_TYPES = [
@@ -1543,9 +1596,10 @@ function revisionChecks(sec, before, after, budget, allowedKeys) {
 }
 function msWordStats() {
   const p = S.project; const O = (p && p.outline) || []; const tol = wordTol();
-  const rows = O.map((sec) => ({ sec, w: words((S.sections[sec.id] && S.sections[sec.id].text) || ""), limit: secLimit(sec) }));
-  const total = rows.reduce((a, r) => a + r.w, 0); const target = p ? targetWords(p) : 0;
-  return { total, target, limit: Math.round(target * (1 + tol)), over: rows.filter((r) => r.w > r.limit), planned: O.reduce((a, s) => a + (Number(s.target_words) || 0), 0) };
+  const rows = O.filter((sec) => !sec.headingOnly).map((sec) => ({ sec, w: words((S.sections[sec.id] && S.sections[sec.id].text) || ""), limit: secLimit(sec) }));
+  const main = rows.filter((r) => !r.sec.aux);
+  const total = main.reduce((a, r) => a + r.w, 0); const target = p ? targetWords(p) : 0;
+  return { total, target, limit: Math.round(target * (1 + tol)), over: rows.filter((r) => r.w > r.limit && !r.sec.fill), planned: main.reduce((a, r) => a + (Number(r.sec.target_words) || 0), 0) };
 }
 
 /* ================= Reference manager import (Zotero, Citavi, EndNote: RIS and BibTeX) ================= */
@@ -1845,6 +1899,11 @@ function clarityBlock() {
 }
 const ANTI_GENERIC = "NO GENERIC FILLER: Every sentence carries information about the topic. Do not write sentences that only announce, summarise or evaluate the text itself (\"This section discusses\", \"As mentioned above\", \"It is important to note that\", \"Zusammenfassend lässt sich sagen\", \"Es ist wichtig zu betonen\"). Do not use stock phrases (\"plays a crucial role\", \"a growing body of literature\", \"sheds light on\", \"multifaceted\", \"in the realm of\", \"spielt eine zentrale Rolle\", \"vielschichtig\", \"von zentraler Bedeutung\"), groups of three chosen for rhythm, rhetorical questions, or a closing sentence that restates the paragraph. Do not hedge the same statement twice.";
 const COHERENCE_RULES = "COHERENCE: The section follows one line of argument. Each paragraph takes up a term or a result of the paragraph before it and adds one step; name the logical relation (cause, contrast, condition, consequence). Do not repeat a point that this section or an earlier section has already made; refer back to it in a subordinate clause at most. The first paragraph connects to the end of the preceding section. The last paragraph ends where the following section can begin, without announcing that section.";
+function modelOrientation(p) {
+  const ma = p.modelArticles || {}; const up = (ma.items || []).filter((m) => m.source === "upload" && m.analysis && m.analysis.argument);
+  if (!ma.argument && !up.length) return "";
+  return "ORIENTATION FROM MODEL ARTICLES (how published texts of this genre build their argument; take the manner, never the content or the wording):\n" + [ma.argument ? "- " + ma.argument : "", ...up.slice(0, 2).map((m) => "- " + m.analysis.argument)].filter(Boolean).join("\n");
+}
 function neighbourBlock(nb) {
   if (!nb) return "";
   return [nb.prev ? "END OF THE PRECEDING SECTION \"" + nb.prev.heading + "\" (context only; connect to it, do not repeat it):\n" + nb.prev.text : "",
@@ -1932,7 +1991,7 @@ function promptSynthesis(p, included, extra) {
   return [ctxBlock(p), criteriaBlock(p), findingsBlock(p), styleBlock(),
     "INCLUDED STUDIES (evidence table with evidence level and methodological rigour, verified passages with their location):\n" + sourcesBlock(included, { abstractChars: 700 }),
     extra.searchFacts ? "SEARCH AND SELECTION FACTS:\n" + extra.searchFacts : "",
-    genreBlock(p), planBlock(p, 12000),
+    genreBlock(p), planBlock(p, 12000), fixedOutlineBlock(p),
     extra.structure ? "STRUCTURE, ARGUMENTATION AND WORD DISTRIBUTION OF PUBLISHED MODEL ARTICLES (orientation, never a template to copy). Take from them the conventions of the genre: the order of the main parts, the function each part has in the argument, the approximate share of words per part and the way tables and figures are used. Derive an independent outline for THIS manuscript from its own question and evidence. Use your own headings; adopt a heading of a model article only where it is a fixed convention (e.g. Introduction, Methods, Results, Discussion).\n" + extra.structure : "",
     "WEIGHTING: Weight findings by evidence level and methodological rigour. Give more weight to rigorous studies, say explicitly when a conclusion rests mainly on low-rigour or uncontrolled evidence, and do not let many weak studies outweigh a few strong ones.",
     p.type === "theoretical" ? "THEORETICAL ARTICLE: The themes are the building blocks of an argument or conceptual model. State explicit propositions where the evidence allows, show how they connect, and mark where the argument goes beyond the available evidence." : "",
@@ -1950,9 +2009,15 @@ function promptSynthesis(p, included, extra) {
 function promptMethodsOutline(p) {
   const m = p.methodSpec || {};
   return [ctxBlock(p), "METHOD TYPE: " + (m.methodType || ""), "STUDY DETAILS:\n" + trunc(m.details || "", 20000),
+    modelStructureText(p) ? "STRUCTURE OF MODEL TEXTS UPLOADED BY THE AUTHOR (orientation, never a template to copy):\n" + modelStructureText(p) : "",
     "TASK: Propose the sub-section structure of the methods chapter following the appropriate reporting standard. Total length about " + targetWords(p) + " words. Headings in " + langName(p) + ".",
     'Reply with only JSON: {"outline": [{"heading": string, "level": 1|2, "purpose_de": string, "target_words": number}]}',
-  ].join("\n\n");
+  ].filter(Boolean).join("\n\n");
+}
+function modelStructureText(p) {
+  const ma = p.modelArticles || {};
+  if (ma.structure) return ma.structure.map((x) => (x.level === 2 ? "  - " : "- ") + x.heading + " (share " + Math.round((x.share || 0) * 100) + "%)" + (x.notes ? ": " + x.notes : "")).join("\n");
+  return (ma.items || []).filter((m) => m.analysis && (m.analysis.sections || []).length).slice(0, 2).map((m) => m.title + ":\n" + m.analysis.sections.map((x) => (x.level === 2 ? "  - " : "- ") + x.heading + (x.share ? " (" + Math.round(x.share * 100) + "%)" : "") + (x.role ? ": " + x.role : "")).join("\n")).join("\n");
 }
 function promptStructure(p, models) {
   const one = (m, i) => {
@@ -2002,6 +2067,8 @@ function promptWrite(p, sec, ctxExtra) {
     ctxExtra.written ? "ALREADY WRITTEN SECTIONS (do not repeat their content; connect to them):\n" + ctxExtra.written : "",
     neighbourBlock(ctxExtra.neighbours),
     "SOURCES:\n" + (ctxExtra.sources || "(none)"),
+    sec.own ? "THIS SECTION REPORTS THE APPLICANT'S OWN FACTS. Write it only from THE AUTHOR'S STUDY DETAILS. Do not cite literature and do not add anything the details do not contain. If the details say nothing on this section, write the single sentence \"[Angabe fehlt]\" and stop." : "",
+    modelOrientation(p),
     "TASK: Write the section \"" + sec.heading + "\" in " + langName(p) + ". Purpose: " + (sec.purpose_de || "") + (sec.keys && sec.keys.length ? ". Prioritise these sources: " + sec.keys.join(", ") : "") + ". Start directly with the text; do not repeat the section heading.",
     "WORD BUDGET (binding): about " + target + " words and never more than " + limit + " words. Meet the budget by selecting what the argument needs. Do not compress into telegraphic style and do not pad a section whose content is complete.",
   ].filter(Boolean).join("\n\n");
@@ -2143,16 +2210,18 @@ function composeBlocks({ withTable = false, figures = null } = {}) {
     if (p.ms.keywords) B.push({ type: "keywords", label: de ? "Schlüsselwörter: " : "Keywords: ", text: p.ms.keywords });
     B.push({ type: "pagebreak" }); B.push({ type: "title", text: title });
   }
+  const refsNow = sortRefs([...keys].filter((k) => ctx.has(k)).map((k) => ctx.get(k))); let refsDone = false;
   for (const sec of p.outline || []) {
     const s = S.sections[sec.id];
     B.push({ type: sec.level === 2 ? "h2" : "h1", text: sec.heading });
+    if (sec.refs) { refsNow.forEach((r) => B.push({ type: "ref", segs: apaRefSegments(r), rec: r })); refsDone = true; continue; }
     for (const b of parseBlocks(s && s.text)) {
       if (b.k === "h") B.push({ type: sec.level === 2 ? "h3" : "h2", text: b.t });
       else B.push({ type: "p", text: renderPlain(b.t, ctx, p.lang), raw: b.t });
     }
   }
   const refs = sortRefs([...keys].filter((k) => ctx.has(k)).map((k) => ctx.get(k)));
-  if (refs.length) {
+  if (refs.length && !refsDone) {
     B.push({ type: "pagebreak" }); B.push({ type: "h1", text: de ? "Literatur" : "References" });
     refs.forEach((r) => B.push({ type: "ref", segs: apaRefSegments(r), rec: r }));
   }
@@ -2269,7 +2338,7 @@ function buildLatex() {
   const p = S.project; const de = p.lang === "de";
   const keys = allCitedKeys(); const ctx = buildRefCtx(S.records, keys);
   const used = new Set(); const bk = new Map();
-  const refs = sortRefs([...keys].filter((k) => ctx.has(k)).map((k) => ctx.get(k)));
+  const refs = sortRefs([...keys].filter((k) => ctx.has(k)).map((k) => ctx.get(k))); let refsInPlace = false;
   refs.forEach((r) => bk.set(r.key, bibKeyFor(r, used)));
   const conv = (t) => texEsc(t).replace(new RegExp(CITE_RE.source, "g"), (m, n, ks) => {
     const ids = parseKeys(ks).map((k) => bk.get(k)).filter(Boolean);
@@ -2295,12 +2364,13 @@ function buildLatex() {
   for (const sec of p.outline || []) {
     const s = S.sections[sec.id];
     L.push((sec.level === 2 ? "\\subsection{" : "\\section{") + texEsc(sec.heading) + "}");
+    if (sec.refs) { L.push("\\printbibliography[heading=none]", ""); refsInPlace = true; continue; }
     for (const b of parseBlocks(s && s.text)) {
       if (b.k === "h") L.push((sec.level === 2 ? "\\subsubsection{" : "\\subsection{") + texEsc(b.t) + "}");
       else L.push(conv(b.t), "");
     }
   }
-  L.push("\\printbibliography", "");
+  if (!refsInPlace) L.push("\\printbibliography", "");
   const figs = [];
   for (const v of numberedVisuals(Object.assign({}, p, { exportTable: false })).filter((x) => x.checked)) {
     const d = visualData(v);
@@ -2845,6 +2915,7 @@ function stageKonzept() {
     field("Autorenrichtlinien der Zeitschrift (optional)", ta(p.guidelines, (v) => { p.guidelines = v; saveProjectSoon(); }, { id: "k-g", rows: 4, placeholder: "Füge Wortlimit, Abstract-Struktur, Gliederungs- und Zitiervorgaben aus den Author Guidelines ein." }), "Fließt in Gliederung, Schreiben, Abstract und Gutachten ein."))));
   if (p.type === "ch_discussion") c.push(panelChapters());
   if (typeInfo(p.type).plan) c.push(panelPlan());
+  c.push(modelsPanel(false));
   c.push(panel("Fragestellung schärfen", btn(k ? "Neu vorschlagen" : "Mit " + AIN() + " schärfen", doKonzept, { kind: k ? "" : "primary", icon: "spark", run: true }),
     k ? konzeptEditor(k) : empty(AIN() + " formuliert die Frage präzise, wählt das passende Rahmenmodell (PCC, PICO, PEO oder SPIDER) und leitet operationale Ein- und Ausschlusskriterien für das Screening ab. Alles bleibt danach editierbar.")));
   return stageShell("konzept", "Lege Frage, Umfang und Zielzeitschrift fest und leite überprüfbare Kriterien ab.", c);
@@ -2855,8 +2926,9 @@ function panelPlan() {
     const f = e.target.files[0]; e.target.value = ""; if (!f) return;
     try { const t = await readFileText(f); m.details = (m.details ? m.details + "\n\n" : "") + "[" + f.name + "]\n" + t.slice(0, 60000); saveProjectSoon(); render(); } catch (err) { toast(err.message, "bad"); }
   } });
-  return panel(req ? "Geplantes Vorgehen" : "Angaben zur Methode (optional)", [btn("Datei hochladen", () => fileIn.click(), { size: "sm", icon: "up" })], fileIn, h("div", { class: "stack" },
-    field(req ? "Design und geplantes Vorgehen deiner Studie" : "Beschreibung der Methode oder des Verfahrens", ta(m.details, (v) => { m.details = v; saveProjectSoon(); }, { id: "pl-details", rows: 10, placeholder: req ? "Design, Setting, Stichprobe und Rekrutierung, Ein- und Ausschlusskriterien, Instrumente oder Datenquellen, Ablauf, Fallzahlüberlegung, Auswertungsplan, Ethikvotum, Registrierung. Stichpunkte genügen." : "Schritte des Verfahrens, Voraussetzungen, Anwendungsbeispiel, bekannte Grenzen. Stichpunkte genügen." }),
+  const dfg = p.type === "dfg";
+  return panel(dfg ? "Dein Vorhaben" : req ? "Geplantes Vorgehen" : "Angaben zur Methode (optional)", [btn("Datei hochladen", () => fileIn.click(), { size: "sm", icon: "up" })], fileIn, h("div", { class: "stack" },
+    field(req ? "Design und geplantes Vorgehen deiner Studie" : "Beschreibung der Methode oder des Verfahrens", ta(m.details, (v) => { m.details = v; saveProjectSoon(); }, { id: "pl-details", rows: 10, placeholder: dfg ? "Ziele und Hypothesen, eigene Vorarbeiten (mit Publikationen), Design, Stichprobe, Methoden, Arbeitspakete und Zeitplan, Gesamtdauer, Umgang mit Forschungsdaten, Ethik und Datenschutz, beantragtes Personal (Umfang, Dauer, Aufgaben), Sachmittel, Reisen, Kooperationen. Stichpunkte genügen." : req ? "Design, Setting, Stichprobe und Rekrutierung, Ein- und Ausschlusskriterien, Instrumente oder Datenquellen, Ablauf, Fallzahlüberlegung, Auswertungsplan, Ethikvotum, Registrierung. Stichpunkte genügen." : "Schritte des Verfahrens, Voraussetzungen, Anwendungsbeispiel, bekannte Grenzen. Stichpunkte genügen." }),
       "Nur was hier steht, wird als Vorgehen beschrieben. Fehlendes markiert " + AIN() + " im Text mit [Angabe fehlt] und erfindet nichts hinzu.")));
 }
 function konzeptEditor(k) {
@@ -2941,6 +3013,7 @@ function stageKonzeptMethods() {
         (chk.missing || []).length ? h("div", null, h("div", { class: "label" }, "Fehlt oder unklar"), h("ul", { class: "small" }, chk.missing.map((x) => h("li", null, h("b", null, x.item), x.why_de ? " · " + x.why_de : "")))) : null,
         chk.notes_de ? h("div", { class: "note" }, chk.notes_de) : null)
         : empty(AIN() + " gleicht deine Angaben mit dem passenden Berichtsstandard ab (z. B. COREQ, STROBE, CONSORT, PRISMA) und zeigt, was für ein vollständiges Methodenkapitel noch fehlt.")),
+    modelsPanel(false),
   ];
   return stageShell("konzept", "Beschreibe deine Studie. Nur diese Angaben fließen in das Methodenkapitel ein.", c);
 }
@@ -3181,6 +3254,25 @@ function stageSynthese() {
       : empty(AIN() + " verdichtet die Evidenztabelle zu Themen, Widersprüchen und Lücken, formuliert die Forschungslücke und schlägt eine Gliederung mit Wortzielen vor. Jede Aussage trägt Keys deiner Studien."));
   return stageShell("synthese", "Verdichte die Evidenz zu Themen und lege die Gliederung des Manuskripts fest.", [models, synP, outlinePanel(), visualsPanel(locked), askPanel()]);
 }
+/* Builds the prescribed outline of a format (e.g. the DFG project description). Keys and purposes proposed by the model are taken over
+   where the numbers match; sections left to the applicant are pre-filled with a marker so that nothing is invented. */
+function applyFixedOutline(aiOutline) {
+  const p = S.project; const T = fixedOutlineOf(p); if (!T) return; const old = p.outline || []; const de = p.lang === "de"; const tw = targetWords(p);
+  const num = (hd) => (String(hd || "").trim().match(/^(\d+(?:\.\d+)*)/) || [])[1] || "";
+  p.outline = T.map((t) => {
+    const heading = t.n + " " + (de ? t.de : t.en); const prev = old.find((x) => x.fixedN === t.n) || old.find((x) => num(x.heading) === t.n);
+    const ai = (aiOutline || []).find((o) => num(o.heading) === t.n) || {};
+    const o = { id: prev ? prev.id : "s_" + uid(), heading, level: t.level, fixedN: t.n, purpose_de: t.purpose || str(ai.purpose_de), target_words: t.head ? 50 : t.share ? Math.max(50, Math.round(tw * t.share / 10) * 10) : t.words || 50,
+      keys: t.own || t.fill || t.head ? [] : arr(ai.keys).map((k) => str(k).trim()).filter((k) => /^R\d+$/.test(k)) };
+    if (t.head) o.headingOnly = true; if (t.refs) o.refs = true; if (t.aux) o.aux = true; if (t.own) o.own = true; if (t.fill) o.fill = true;
+    if (t.fill && !(S.sections[o.id] && S.sections[o.id].text)) setSectionText(o.id, "[Angabe fehlt]", "von dir auszufüllen; falls nicht zutreffend, schreibe „Entfällt.“");
+    return o;
+  });
+}
+function fixedOutlineBlock(p) {
+  const T = fixedOutlineOf(p); if (!T) return "";
+  return "PRESCRIBED OUTLINE (binding; the funder's template fixes numbers and headings). In \"outline\", return one entry for each of these sections and no others, with the heading exactly as given, purpose_de and the keys most relevant to it:\n" + T.filter((t) => !t.head && !t.own && !t.fill).map((t) => "- " + t.n + " " + (p.lang === "de" ? t.de : t.en)).join("\n");
+}
 function applyOutline(newOutline) {
   const p = S.project; const old = p.outline || [];
   p.outline = newOutline.map((o) => {
@@ -3199,15 +3291,15 @@ async function synthesisCore({ signal, update }) {
     if (byteLen(prompt) > 230000) prompt = promptSynthesis(p, inc.map((r) => Object.assign({}, r, { abstract: "" })), { searchFacts: processFacts(p), structure });
     const r = await ai(prompt, { tier: S.settings.writeTier, json: true, signal });
     p.synthesis = { themes: arr(r.themes).map((t) => ({ title: str(t.title), summary: str(t.summary), keys: arr(t.keys).map(str) })), contradictions: arr(r.contradictions).map((t) => ({ text: str(t.text), keys: arr(t.keys).map(str) })), gaps: arr(r.gaps).map((t) => ({ text: str(t.text), keys: arr(t.keys).map(str) })), research_gap_statement: str(r.research_gap_statement), journals: arr(r.journals).map((j) => ({ name: str(j.name), why_de: str(j.why_de) })), notes_de: str(r.notes_de), at: nowISO() };
-    if (arr(r.outline).length) applyOutline(arr(r.outline));
+    if (fixedOutlineOf(p)) applyFixedOutline(arr(r.outline)); else if (arr(r.outline).length) applyOutline(arr(r.outline));
     logEvent("Synthese und Gliederung erstellt (" + inc.length + " Studien)");
     await saveProjectNow();
 }
 function outlinePanel() {
-  const p = S.project; const O = p.outline || (p.outline = []); const total = O.reduce((a, s) => a + (Number(s.target_words) || 0), 0);
+  const p = S.project; const O = p.outline || (p.outline = []); const total = O.filter((s) => !s.headingOnly && !s.aux).reduce((a, s) => a + (Number(s.target_words) || 0), 0);
   const move = (i, d) => { const j = i + d; if (j < 0 || j >= O.length) return; [O[i], O[j]] = [O[j], O[i]]; saveProjectSoon(); render(); };
   const tw = targetWords(p); const off = O.length && Math.abs(total - tw) > tw * 0.03;
-  const rescale = () => { const f = tw / Math.max(1, total); O.forEach((s) => { s.target_words = Math.max(50, Math.round((Number(s.target_words) || 0) * f / 10) * 10); }); saveProjectSoon(); render(); };
+  const rescale = () => { const f = tw / Math.max(1, total); O.filter((s) => !s.headingOnly && !s.aux).forEach((s) => { s.target_words = Math.max(50, Math.round((Number(s.target_words) || 0) * f / 10) * 10); }); saveProjectSoon(); render(); };
   return panel("Gliederung", h("div", { class: "row small" }, chip(total + " von " + tw + " Wörtern geplant", off ? "warn" : O.length ? "ok" : "", { dot: true }), off ? btn("Wortziele an die Vorgabe anpassen", rescale, { size: "xs", title: "Verteilt die Vorgabe von " + tw + " Wörtern im bisherigen Verhältnis auf die Abschnitte" }) : null),
     O.length ? h("div", { class: "stack-s" }, O.map((s, i) => h("div", { class: "outline-row" + (s.level === 2 ? " l2" : "") },
       h("div", { class: "stack-s", style: "min-width:0" }, inp(s.heading, (v) => { s.heading = v; saveProjectSoon(); }, { id: "ol-h-" + s.id }), inp(s.purpose_de, (v) => { s.purpose_de = v; saveProjectSoon(); }, { id: "ol-p-" + s.id, placeholder: "Zweck des Abschnitts" }),
@@ -3488,7 +3580,7 @@ function stageManuskript() {
   const allText = O.map((s) => (S.sections[s.id] && S.sections[s.id].text) || "").join("\n\n");
   const unknown = [...keys].filter((k) => !recByKey(k));
   const missing = (allText.match(/\[Beleg fehlt\]/g) || []).length + (allText.match(/\[Angabe fehlt\]/g) || []).length;
-  const written = O.filter((s) => S.sections[s.id] && S.sections[s.id].text).length;
+  const OW = O.filter((s) => !s.headingOnly); const written = OW.filter((s) => S.sections[s.id] && S.sections[s.id].text).length;
   const isArt = TYPES[p.type].kind === "article";
   p.ms = p.ms || { title: "", abstract: "", keywords: "" };
   const meta = panel(isArt ? "Titel und Abstract" : "Titel", isArt ? btn(p.ms.abstract ? "Abstract neu" : "Abstract und Titel vorschlagen", doAbstract, { icon: "spark", run: true, size: "sm", disabled: locked || !written }) : null,
@@ -3501,12 +3593,13 @@ function stageManuskript() {
   const tools = panel("Abschnitte", h("div", { class: "btn-row" },
       ws.over.length ? btn("Wortzahl prüfen und verdichten (" + ws.over.length + ")", doCondenseAll, { size: "sm", run: true, disabled: locked, title: "Verdichtet Abschnitte über ihrer Obergrenze, ohne Aussagen oder Zitationen zu verlieren" }) : null,
       p.type === "ch_methods" ? btn(O.length ? "Gliederung neu vorschlagen" : "Gliederung vorschlagen", doMethodsOutline, { size: "sm", icon: "spark", run: true, disabled: locked }) : null,
-      btn("Alle leeren Abschnitte schreiben", doWriteAll, { kind: "primary", icon: "spark", run: true, disabled: locked || !O.some((s) => !(S.sections[s.id] && S.sections[s.id].text)) })),
-    h("div", { class: "row small" }, chip(written + " von " + O.length + " Abschnitten"), chip(totalW + " von " + targetWords(p) + " Wörtern", totalW > ws.limit ? "bad" : written === O.length && O.length ? "ok" : "", { title: "Verbindliche Vorgabe " + targetWords(p) + " Wörter, Obergrenze " + ws.limit }), unknown.length ? chip(unknown.length + " unbekannte Keys", "bad") : chip("alle Zitationen in der Bibliothek", "ok"), missing ? chip(missing + "× Beleg oder Angabe fehlt", "warn") : null),
+      btn("Alle leeren Abschnitte schreiben", doWriteAll, { kind: "primary", icon: "spark", run: true, disabled: locked || !O.some(secIsEmpty) })),
+    h("div", { class: "row small" }, chip(written + " von " + OW.length + " Abschnitten"), chip(ws.total + " von " + targetWords(p) + " Wörtern" + (fixedOutlineOf(p) ? " in Kapitel 1 und 2" : ""), ws.total > ws.limit ? "bad" : written === OW.length && OW.length ? "ok" : "", { title: "Verbindliche Vorgabe " + targetWords(p) + " Wörter, Obergrenze " + ws.limit }), unknown.length ? chip(unknown.length + " unbekannte Keys", "bad") : chip("alle Zitationen in der Bibliothek", "ok"), missing ? chip(missing + "× Beleg oder Angabe fehlt", "warn") : null),
     !O.length ? empty(p.type === "ch_methods" ? "Lass " + AIN() + " eine Gliederung nach dem passenden Berichtsstandard vorschlagen oder lege Abschnitte in der Gliederung an." : "Noch keine Gliederung. Erstelle sie in der Etappe Synthese.") : null);
   return stageShell("manuskript", AIN() + " schreibt jeden Abschnitt aus deiner Evidenztabelle. Zitationen verweisen nur auf Datensätze deiner Bibliothek; ein Klick zeigt die Quelle.", [meta, tools, h("div", null, O.map((s) => sectionCard(s, ctx, locked)))]);
 }
 function sectionCard(sec, ctx, locked) {
+  if (sec.headingOnly) return h("div", { class: "sec", style: "padding:12px 20px;background:var(--sheet-2);box-shadow:none" }, h("div", { class: "between" }, h("h3", { style: "font-size:" + (sec.level === 2 ? "16" : "18") + "px;font-weight:650" }, sec.heading), sec.refs ? chip("wird beim Export aus den Zitationen erzeugt", "acc") : chip("Überschrift der Vorlage")));
   const p = S.project; const s = S.sections[sec.id] || {}; const has = !!(s.text && s.text.trim());
   const w = words(s.text); const edit = S.editMode.has(sec.id); const streaming = S.streaming === sec.id;
   const limit = secLimit(sec); const over = w > limit;
@@ -3599,7 +3692,7 @@ async function writeSectionCore(sec, signal, update) {
 function doWrite(sec) { run("Abschnitt schreiben", async ({ signal, update }) => { update("„" + sec.heading + "“ · " + AIN() + " plant den Abschnitt …"); await writeSectionCore(sec, signal, update); }); }
 function doWriteAll() { run("Manuskript schreiben", writeAllCore); }
 async function writeAllCore({ signal, update }) {
-    const todo = (S.project.outline || []).filter((s) => !(S.sections[s.id] && S.sections[s.id].text));
+    const todo = (S.project.outline || []).filter(secIsEmpty);
     for (let i = 0; i < todo.length; i++) {
       update("Abschnitt " + (i + 1) + " von " + todo.length + ": „" + todo[i].heading + "“", i / todo.length);
       await writeSectionCore(todo[i], signal, (d) => update("Abschnitt " + (i + 1) + " von " + todo.length + " · " + d, (i + 0.5) / todo.length));
@@ -3986,7 +4079,7 @@ function slug(s) { return (String(s || "manuskript").normalize("NFKD").replace(/
 function stageExport() {
   const p = S.project; const O = p.outline || []; const keys = allCitedKeys(); const ctx = buildRefCtx(S.records, keys);
   const allText = O.map((s) => (S.sections[s.id] && S.sections[s.id].text) || "").join("\n");
-  const emptyS = O.filter((s) => !(S.sections[s.id] && S.sections[s.id].text)).length;
+  const emptyS = O.filter(secIsEmpty).length;
   const unknown = [...keys].filter((k) => !recByKey(k)).length;
   const missing = (allText.match(/\[(Beleg|Angabe) fehlt\]/g) || []).length;
   const citedRecs = [...keys].map(recByKey).filter(Boolean);
@@ -4319,7 +4412,7 @@ function renderTopbar() {
     sys.push(chip(Store.persistent() ? "lokal gespeichert" : "nur diese Sitzung", Store.persistent() ? "ok" : "warn", { dot: true }));
   }
   $("#topbar").replaceChildren(
-    h("button", { class: "brand", type: "button", onclick: goHome, "aria-label": "Zur Projektübersicht" }, h("span", { class: "brand-mark", "aria-hidden": "true" }, icon("spark")), h("span", { class: "brand-name" }, "Research Studio"), h("span", { class: "brand-tag" }, ["PubMed", "OpenAlex", ...[...used].map((pv) => PROVIDER_NAME[pv])].join(" · "))),
+    h("button", { class: "brand", type: "button", onclick: goHome, "aria-label": "Zur Projektübersicht" }, h("span", { class: "brand-mark", "aria-hidden": "true" }, icon("spark")), h("span", { class: "brand-name" }, "Research Studio"), h("span", { class: "brand-tag" }, ["Version " + APP_VERSION, "PubMed", "OpenAlex", ...[...used].map((pv) => PROVIDER_NAME[pv])].join(" · "))),
     h("div", { class: "spacer" }), h("div", { class: "sys" }, sys),
     btn("Einstellungen", openSettings, { kind: "ghost", size: "sm", icon: "gear" }));
 }
@@ -4843,7 +4936,7 @@ function stageGaps(s) {
     case "konzept":
       if (isM) return ((p.methodSpec && p.methodSpec.details) || "").trim().length < 40 ? "Trage unten Design, Stichprobe, Ablauf und Auswertung deiner Studie ein. Stichpunkte genügen." : null;
       if (p.type === "ch_discussion" && !(p.keyFindings || []).length) return "Lade unten deine eigenen Kapitel hoch (Einleitung, Methodik, Ergebnisse). Die Diskussion baut auf deinen Befunden auf.";
-      if (typeInfo(p.type).plan === "required" && planDetails(p).length < 40) return "Trage unten das geplante Vorgehen ein (Design, Stichprobe, Erhebung, Auswertung). Stichpunkte genügen; nur diese Angaben werden im Protokoll beschrieben.";
+      if (typeInfo(p.type).plan === "required" && planDetails(p).length < 40) return "Trage unten das geplante Vorgehen ein (Design, Stichprobe, Erhebung, Auswertung). Stichpunkte genügen; nur diese Angaben werden im Text beschrieben.";
       return p.konzept && (p.konzept.inclusion || []).length ? null : "Fragestellung und Kriterien fehlen noch.";
     case "suche":
       if (isM) return null;
@@ -4864,7 +4957,7 @@ function stageGaps(s) {
     case "manuskript": {
       const O = p.outline || [];
       if (!O.length) return "Noch keine Gliederung.";
-      const e = O.filter((x) => !(S.sections[x.id] && S.sections[x.id].text)).length;
+      const e = O.filter(secIsEmpty).length;
       return e ? e + " Abschnitte sind noch leer." : null;
     }
     case "pruefung": return S.review && S.review.gutachten ? null : "Das Gutachten fehlt noch.";
@@ -4898,7 +4991,7 @@ function autoStep(s) {
       return p.synthesis && (p.outline || []).length ? null : inc.some((r) => r.extraction) ? { title: "Synthese und Gliederung erstellen", text: AIN() + " verdichtet die Studien zu Themen, Widersprüchen und Lücken und schlägt eine Gliederung mit Wortzielen vor. Deine Vorgaben aus den Autorenrichtlinien fließen ein.", exec: synthesisCore } : null;
     case "manuskript": {
       if (p.type === "ch_methods" && !(p.outline || []).length) return { title: "Gliederung vorschlagen", text: AIN() + " schlägt die Gliederung deines Methodenkapitels nach dem passenden Berichtsstandard vor.", exec: methodsOutlineCore };
-      const emptyN = (p.outline || []).filter((x) => !(S.sections[x.id] && S.sections[x.id].text)).length;
+      const emptyN = (p.outline || []).filter(secIsEmpty).length;
       if (emptyN) return { title: "Manuskript schreiben", text: AIN() + " schreibt die " + emptyN + " leeren Abschnitte nacheinander. Zitiert wird nur, was in deiner Bibliothek liegt.", exec: writeAllCore };
       if (TYPES[p.type].kind === "article" && !(p.ms && p.ms.abstract)) return { title: "Abstract und Titel vorschlagen", text: AIN() + " schreibt Abstract und Schlüsselwörter und schlägt drei Titel vor.", exec: abstractCore };
       return null;
@@ -5110,6 +5203,7 @@ function selfTestOffline() {
   t("Vorbildartikel: Wortverteilung der Abschnitte", () => { const r = sectionShares(art, [{ heading: "Introduction" }, { heading: "Methods" }, { heading: "Results" }, { heading: "Discussion" }]); return eq(r.found + " · " + r.sections.map((x) => Math.round(x.share * 100)).join("/"), "4 · 19/40/22/19"); });
   t("Vorbildartikel: Tabellen und Abbildungen werden erkannt", () => { const c = detectCaptions(art); return eq(c.tables + " Tabelle, " + c.figures + " Abbildung", "1 Tabelle, 1 Abbildung"); });
   t("Abbildungen aus Projektdaten (Flussdiagramm, Jahresverteilung)", () => { const a = prismaSvg({ total: 120, dupes: 14, pubmed: 90, openalex: 25, related: 5, screened: 120, excluded: 98, included: 22, unsure: 0, unscreened: 0, titleExcluded: 40 }, true); const b = yearsSvg([{ year: "2019" }, { year: "2021" }, { year: "2021" }], false); return eq([/n = 134/.test(a), /Studien eingeschlossen \(n = 22\)/.test(a), (b.match(/<path/g) || []).length, /Year of publication/.test(b)].join(","), "true,true,2,true"); });
+  t("DFG-Antrag: vorgegebene Gliederung nach Vordruck 54.012", () => { const T = FIXED_OUTLINES.dfg; const sh = T.reduce((x, y) => x + (y.share || 0), 0); return eq([T.length, T.filter((x) => x.refs).map((x) => x.n).join(), T.some((x) => x.n === "4.12") && T.some((x) => x.n === "5.8"), Math.round(sh * 100), TYPES.dfg.plan].join(" · "), "38 · 3 · true · 99 · required"); });
   t("Modellliste erweiterbar", () => { const kc = S.settings.customModels; try { S.settings.customModels = [{ id: "test-model-x", name: "Testmodell", provider: "openai", inp: 1, out: 2 }]; const m = modelInfo("test-model-x"); return eq(m.name + "," + m.provider + "," + m.out + "," + !!modelInfo("gibt-es-nicht").unknown, "Testmodell,openai,2,true"); } finally { S.settings.customModels = kc; } });
   return out;
 }
